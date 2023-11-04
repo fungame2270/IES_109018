@@ -1,0 +1,22 @@
+services:
+  sql:
+    image: mysql/mysql-server:latest
+    environment:
+      - MYSQL_DATABASE=demo
+      - MYSQL_ROOT_PASSWORD=secret1
+      - MYSQL_USER=demo
+      - MYSQL_PASSWORD=secret2
+    ports: 
+      - "33060:3306"
+  spring:
+    image: eclipse-temurin:17-jdk-alpine
+    volumes:
+      - ./Quotes/target/:/app/
+    depends_on:
+      - sql
+    ports:
+      - 8080:8080
+    command: java -jar /app/Quotes-0.0.1-SNAPSHOT.jar
+
+
+
